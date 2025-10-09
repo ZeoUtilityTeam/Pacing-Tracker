@@ -1,13 +1,13 @@
 const items = [
-      "NEM sub", "NEM Resub", "NEM approval", "PTO sub", "PTO Resub", "PTO approval",
+      "NEM Sub", "NEM Resub", "NEM Approval", "PTO Sub", "PTO Resub", "PTO Approval",
       "Signature Sent", "Signature Received", "Chatters"
     ];
 
 const timePerItem = {
-      "NEM sub": 25,
-      "PTO sub": 25,
-      "NEM approval": 5,
-      "PTO approval": 5,
+      "NEM Sub": 25,
+      "PTO Sub": 25,
+      "NEM Approval": 5,
+      "PTO Approval": 5,
       "Signature Received": 5,
       "Chatters": 3,
       "Signature Sent": 15,
@@ -170,4 +170,5 @@ darkModeToggle.onclick = () => {
 };
 
 updateTotal();
+
 
