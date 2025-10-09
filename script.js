@@ -1,13 +1,19 @@
 const items = [
-  "NEM sub", "NEM approval", "PTO sub", "PTO approval",
-  "Send", "Sign", "T2 requested", "T2 verified", "Resub", "Follow-up"
-];
+      "NEM sub", "NEM Resub", "NEM approval", "PTO sub", "PTO Resub", "PTO approval",
+      "Signature Sent", "Signature Received", "Chatters"
+    ];
 
 const timePerItem = {
-  "NEM sub": 30, "PTO sub": 30, "NEM approval": 5, "PTO approval": 5,
-  "Sign": 5, "T2 verified": 5, "Follow-up": 5, "Send": 15,
-  "T2 requested": 15, "Resub": 15
-};
+      "NEM sub": 25,
+      "PTO sub": 25,
+      "NEM approval": 5,
+      "PTO approval": 5,
+      "Signature Received": 5,
+      "Chatters": 3,
+      "Signature Sent": 15,
+      "NEM Resub": 15,
+      "PTO Resub": 15
+  };
 
 const tracker = document.getElementById("tracker");
 const totalDisplay = document.getElementById("total-count");
@@ -164,3 +170,4 @@ darkModeToggle.onclick = () => {
 };
 
 updateTotal();
+
