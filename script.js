@@ -140,19 +140,46 @@ document.getElementById("reset").onclick = () => {
 };
 
 document.getElementById("submit").onclick = () => {
-  const totalCount = Object.values(counters).reduce((s, el) => s + parseInt(el.textContent), 0);
+  const totalCount = Object.values(counters).reduce(
+    (sum, el) => sum + parseInt(el.textContent),
+    0
+  );
   if (totalCount === 0) {
     alert("Please enter some values before submitting.");
     return;
   }
 
-  const baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdoD9t7gkUVwBCO5by91cJ59lsUUPEQy-XL_00phfjMnRVqcQ/viewform?usp=pp_url";
-  const params = new URLSearchParams();
-  for (let label in counters)
-    params.append(label, counters[label].textContent);
+  // Your base Google Form URL
+  const baseUrl =
+    "https://docs.google.com/forms/d/e/1FAIpQLSdoD9t7gkUVwBCO5by91cJ59lsUUPEQy-XL_00phfjMnRVqcQ/viewform?usp=pp_url";
 
-  window.open(`${baseUrl}&${params.toString()}`, "_blank");
+  // Map tracker labels → Google Form entry fields
+  const formMap = {
+    "NEM sub": "entry.1750084173",
+    "NEM approval": "entry.2022773303",
+    "NEM Resub": "entry.2134902399",
+    "PTO sub": "entry.1414420551",
+    "PTO approval": "entry.1718501368",
+    "PTO Resub": "entry.895961438",
+    "Signature Sent": "entry.1602704240",
+    "Signature Received": "entry.1105379573",
+  };
+
+  // Build prefilled form query
+  const params = new URLSearchParams();
+
+  for (let label in counters) {
+    const entryId = formMap[label];
+    if (entryId) {
+      params.append(entryId, counters[label].textContent);
+    }
+  }
+
+  // Open the prefilled form for review
+  const fullUrl = `${baseUrl}&${params.toString()}`;
+  window.open(fullUrl, "_blank");
 };
+
 
 shiftHoursInput.addEventListener("input", updateTotal);
 
@@ -170,5 +197,6 @@ darkModeToggle.onclick = () => {
 };
 
 updateTotal();
+
 
 
