@@ -159,10 +159,10 @@ document.getElementById("submit").onclick = () => {
     "NEM approval": "entry.2022773303",
     "NEM Resub": "entry.2134902399",
     "PTO sub": "entry.1414420551",
-    "PTO approval": "entry.1718501368",
-    "PTO Resub": "entry.895961438",
-    "Signature Sent": "entry.1602704240",
-    "Signature Received": "entry.1105379573",
+    "PTO approval": "entry.1602704240",
+    "PTO Resub": "entry.1105379573",
+    "Signature Sent": "entry.1718501368",
+    "Signature Received": "entry.895961438",
   };
 
   // Build prefilled form query
@@ -197,6 +197,7 @@ darkModeToggle.onclick = () => {
 };
 
 updateTotal();
+
 
 
 
