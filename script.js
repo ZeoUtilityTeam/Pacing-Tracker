@@ -155,14 +155,15 @@ document.getElementById("submit").onclick = () => {
 
   // Map tracker labels → Google Form entry fields
   const formMap = {
-    "NEM sub": "entry.1750084173",
-    "NEM approval": "entry.2022773303",
+    "NEM Sub": "entry.1750084173",
+    "NEM Approval": "entry.2022773303",
     "NEM Resub": "entry.2134902399",
-    "PTO sub": "entry.1414420551",
-    "PTO approval": "entry.1602704240",
+    "PTO Sub": "entry.1414420551",
+    "PTO Approval": "entry.1602704240",
     "PTO Resub": "entry.1105379573",
     "Signature Sent": "entry.1718501368",
     "Signature Received": "entry.895961438",
+      // entry.877998540 for other pacing info
   };
 
   // Build prefilled form query
@@ -197,6 +198,7 @@ darkModeToggle.onclick = () => {
 };
 
 updateTotal();
+
 
 
 
