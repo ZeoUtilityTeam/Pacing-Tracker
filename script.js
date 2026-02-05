@@ -37,14 +37,15 @@ function loadFromStorage() {
 function saveToStorage() {
   const data = {};
   for (let label in counters)
-    data[label] = parseInt(counters[label].textContent);
+      const el = counters[label];
+      data[label] = parseInt(el.value ?? el.textContent) || 0;
   localStorage.setItem("trackerCounts", JSON.stringify(data));
 }
 
 function updateTotal() {
   let totalMinutes = 0;
   for (let label in counters)
-    totalMinutes += parseInt(counters[label].textContent) * (timePerItem[label] || 0);
+    totalMinutes += parseInt(counters[label].value ?? counters[label].textContent) || 0 * (timePerItem[label] || 0);
 
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
@@ -104,26 +105,61 @@ items.forEach(label => {
   const controls = document.createElement("div");
   controls.className = "controls";
 
-  const countSpan = document.createElement("span");
-  countSpan.className = "count";
-  countSpan.textContent = values[label] || 0;
-  counters[label] = countSpan;
+// conditional formatting so that chatters can be typed in not only clicked
+let counterEl;
 
-  const plusButton = document.createElement("button");
-  plusButton.textContent = "+";
-  plusButton.onclick = () => {
-    countSpan.textContent = parseInt(countSpan.textContent) + 1;
+if (label === "Chatters") {
+  const input = document.createElement("input");
+  input.type = "number";
+  input.min = "0";
+  input.value = values[label] || 0;
+  input.className = "count-input";
+
+  input.addEventListener("input", () => {
+    if (input.value < 0) input.value = 0;
     saveToStorage();
     updateTotal();
-  };
+  });
 
-  const minusButton = document.createElement("button");
-  minusButton.textContent = "−";
-  minusButton.onclick = () => {
-    countSpan.textContent = Math.max(0, parseInt(countSpan.textContent) - 1);
-    saveToStorage();
-    updateTotal();
-  };
+  counterEl = input;
+} else {
+  const span = document.createElement("span");
+  span.className = "count";
+  span.textContent = values[label] || 0;
+  counterEl = span;
+}
+counters[label] = counterEl;
+
+plusButton.onclick = () => {
+  const el = counters[label];
+  const val = parseInt(el.value ?? el.textContent) || 0;
+
+  if (el.tagName === "INPUT") {
+    el.value = val + 1;
+  } else {
+    el.textContent = val + 1;
+  }
+
+  saveToStorage();
+  updateTotal();
+};
+
+
+minusButton.onclick = () => {
+  const el = counters[label];
+  const val = parseInt(el.value ?? el.textContent) || 0;
+  const newVal = Math.max(0, val - 1);
+
+  if (el.tagName === "INPUT") {
+    el.value = newVal;
+  } else {
+    el.textContent = newVal;
+  }
+
+  saveToStorage();
+  updateTotal();
+};
+
 
   controls.append(minusButton, countSpan, plusButton);
   div.append(labelSpan, controls);
@@ -198,6 +234,7 @@ darkModeToggle.onclick = () => {
 };
 
 updateTotal();
+
 
 
 
