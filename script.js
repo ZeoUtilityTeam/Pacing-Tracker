@@ -20,6 +20,9 @@ const totalDisplay = document.getElementById("total-count");
 const progressBar = document.getElementById("progress-bar");
 const progressDisplay = document.getElementById("progress-display");
 const shiftHoursInput = document.getElementById("shift-hours");
+const customGoalToggle = document.getElementById("custom-goal-toggle");
+const customGoalInput = document.getElementById("custom-goal-input");
+const customGoalLabel = document.getElementById("custom-goal-label");
 const darkModeToggle = document.getElementById("darkModeToggle");
 const icon = darkModeToggle.querySelector(".icon");
 
@@ -79,6 +82,9 @@ function updateTotal() {
     `Total: ${totalMinutes} min (${hours} hr ${minutes} min)`;
 
   const shiftHours = parseFloat(shiftHoursInput.value);
+  const goalPercent = customGoalToggle.checked
+    ? Math.max(1, parseFloat(customGoalInput.value) || 90)
+    : 90;
 
   if (!isNaN(shiftHours) && shiftHours > 0) {
     const percentage = Math.round(
@@ -90,7 +96,7 @@ function updateTotal() {
     progressBar.style.width = `${capped}%`;
     progressDisplay.textContent = `Progress: ${percentage}%`;
 
-    if (percentage >= 90 && !confettiFired) {
+    if (percentage >= goalPercent && !confettiFired) {
       confettiFired = true;
       fireConfetti();
     }
@@ -279,6 +285,17 @@ document.getElementById("submit").onclick = () => {
 /* ---------------- SHIFT HOURS ---------------- */
 
 shiftHoursInput.addEventListener("input", updateTotal);
+
+/* ---------------- CUSTOM GOAL ---------------- */
+
+customGoalToggle.addEventListener("change", () => {
+  const show = customGoalToggle.checked;
+  customGoalInput.style.display = show ? "inline-block" : "none";
+  customGoalLabel.style.display = show ? "inline" : "none";
+  updateTotal();
+});
+
+customGoalInput.addEventListener("input", updateTotal);
 
 /* ---------------- DARK MODE ---------------- */
 

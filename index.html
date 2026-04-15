@@ -26,6 +26,21 @@
     <div class="progress-section">
       <p>Shift hours:</p>
       <input type="number" id="shift-hours" min="1" placeholder="e.g. 8" />
+      <div class="custom-goal-row">
+      <label>
+        <input type="checkbox" id="custom-goal-toggle" />
+        Custom pacing goal?
+      </label>
+      <input
+        type="number"
+        id="custom-goal-input"
+        min="1"
+        max="999"
+        placeholder="e.g. 85"
+        style="display:none"
+      />
+      <span id="custom-goal-label" style="display:none">%</span>
+    </div>
       <div class="progress-bar-container">
         <div class="progress-bar" id="progress-bar"></div>
       </div>
