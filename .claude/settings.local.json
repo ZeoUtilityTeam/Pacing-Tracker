@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx --version)"
+      "Bash(npx --version)",
+      "Bash(git config *)"
     ]
   }
 }
