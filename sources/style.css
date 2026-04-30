@@ -160,6 +160,24 @@ input[type="number"] {
   color: var(--muted);
 }
 
+.notes-section {
+  margin-top: 16px;
+}
+
+.notes-section textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
 .bottom-buttons {
   margin-top: 20px;
   display: flex;

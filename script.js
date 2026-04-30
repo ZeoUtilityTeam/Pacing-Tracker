@@ -246,7 +246,7 @@ document.getElementById("reset").onclick = () => {
 
 /* ---------------- GOOGLE FORM ---------------- */
 
-document.getElementById("submit").onclick = () => {
+document.getElementById("submit").onclick = async () => {
 
   const totalCount = Object.values(counters)
     .reduce((sum, el) => sum + getValue(el), 0);
@@ -256,30 +256,44 @@ document.getElementById("submit").onclick = () => {
     return;
   }
 
-  const baseUrl =
-    "https://docs.google.com/forms/d/e/1FAIpQLSdoD9t7gkUVwBCO5by91cJ59lsUUPEQy-XL_00phfjMnRVqcQ/viewform?usp=pp_url";
+  const actionUrl =
+    "https://docs.google.com/forms/d/e/1FAIpQLSdoD9t7gkUVwBCO5by91cJ59lsUUPEQy-XL_00phfjMnRVqcQ/formResponse";
 
   const formMap = {
     "NEM Sub": "entry.1750084173",
-    "NEM Approval": "entry.2022773303",
-    "NEM Resub": "entry.2134902399",
+    "NEM Resub": "entry.2022773303",
+    "NEM Approval": "entry.2134902399",
     "PTO Sub": "entry.1414420551",
-    "PTO Approval": "entry.1602704240",
-    "PTO Resub": "entry.1105379573",
+    "PTO Resub": "entry.1602704240",
+    "PTO Approval": "entry.1105379573",
     "Signature Sent": "entry.1718501368",
     "Signature Received": "entry.895961438",
+    "Chatters": "entry.877998540"
   };
 
-  const params = new URLSearchParams();
+  const miscNotes = document.getElementById("misc-notes").value.trim();
+  const formData = new FormData();
 
   for (let label in counters) {
     const entryId = formMap[label];
     if (entryId) {
-      params.append(entryId, getValue(counters[label]));
+      let value;
+      if (label === "Chatters") {
+        value = `Chatters: ${getValue(counters[label])}`;
+        if (miscNotes) value += `\n${miscNotes}`;
+      } else {
+        value = getValue(counters[label]);
+      }
+      formData.append(entryId, value);
     }
   }
 
-  window.open(`${baseUrl}&${params.toString()}`, "_blank");
+  try {
+    await fetch(actionUrl, { method: "POST", mode: "no-cors", body: formData });
+    alert("Submitted successfully!");
+  } catch {
+    alert("Submission failed. Please try again.");
+  }
 };
 
 /* ---------------- SHIFT HOURS ---------------- */
