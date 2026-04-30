@@ -246,7 +246,7 @@ document.getElementById("reset").onclick = () => {
 
 /* ---------------- GOOGLE FORM ---------------- */
 
-document.getElementById("submit").onclick = async () => {
+document.getElementById("submit").onclick = () => {
 
   const totalCount = Object.values(counters)
     .reduce((sum, el) => sum + getValue(el), 0);
@@ -257,7 +257,7 @@ document.getElementById("submit").onclick = async () => {
   }
 
   const actionUrl =
-    "https://docs.google.com/forms/d/e/1FAIpQLSdoD9t7gkUVwBCO5by91cJ59lsUUPEQy-XL_00phfjMnRVqcQ/formResponse";
+    "https://docs.google.com/forms/d/e/1FAIpQLSdoD9t7gkUVwBCO5by91cJ59lsUUPEQy-XL_00phfjMnRVqcQ/viewform?usp=pp_url";
 
   const formMap = {
     "NEM Sub": "entry.1750084173",
@@ -272,7 +272,7 @@ document.getElementById("submit").onclick = async () => {
   };
 
   const miscNotes = document.getElementById("misc-notes").value.trim();
-  const formData = new FormData();
+  const params = new URLSearchParams();
 
   for (let label in counters) {
     const entryId = formMap[label];
@@ -284,16 +284,11 @@ document.getElementById("submit").onclick = async () => {
       } else {
         value = getValue(counters[label]);
       }
-      formData.append(entryId, value);
+      params.append(entryId, value);
     }
   }
 
-  try {
-    await fetch(actionUrl, { method: "POST", mode: "no-cors", body: formData });
-    alert("Submitted successfully!");
-  } catch {
-    alert("Submission failed. Please try again.");
-  }
+  window.open(`${actionUrl}&${params.toString()}`, "_blank");
 };
 
 /* ---------------- SHIFT HOURS ---------------- */
